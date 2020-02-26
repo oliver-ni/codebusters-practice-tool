@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Code Busters</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script> -->
+
+    <script defer src="quotes.js"></script>
+    <script defer src="main.js"></script>
+
+</head>
+
+<body>
+
+    <div id="main">
+
+        <section class="section">
+            <div class="container content">
+                <p>Decode the following message which is a quote by {{ author }}.</p>
+
+                <div class="problem">
+                    <div class="word" v-for="word in wordByWord">
+                        <div v-for="c in word" class="letter">
+                            <span>{{ c }}</span>
+                            <span v-if="decodeLetter(c) == ''" class="empty">-</span>
+                            <span v-else>{{ decodeLetter(c) }}</span>
+                        </div>
+                        <span> </span>
+                    </div>
+                </div>
+
+                <table class="table is-bordered">
+                    <thead>
+                        <tr>
+                            <th v-for="letter in alphabet" :class="{ 'hid': !ciphertext.includes(letter) }">
+                                {{ letter }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td v-for="letter in alphabet" :class="{ 'hid': !ciphertext.includes(letter) }">
+                                {{ countLetter(ciphertext, letter) }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td v-for="letter in alphabet" class="inputcontainer"
+                                :class="{ 'hid': !ciphertext.includes(letter) }">
+                                <input class="bareinput input" @keydown.delete="deleteDecode($event, letter)"
+                                    @keypress="updateDecode($event, letter)" :value="decodeLetter(letter)"
+                                    :disabled="!ciphertext.includes(letter)">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button class="button" @click="newProblem">New Problem</button>
+            </div>
+        </section>
+
+    </div>
+
+</body>
+
+</html>

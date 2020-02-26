@@ -1,0 +1,40 @@
+.problem {
+    font-family: "Roboto Mono";
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.problem .word {
+    display: inline-block;
+    margin-right: 15px;
+    margin-bottom: 15px;
+}
+
+.problem .letter {
+    display: inline-flex;
+    flex-direction: column;
+    white-space: pre;
+}
+
+.problem .letter .empty {
+    opacity: 0.2;
+}
+
+.table {
+    font-family: "Roboto Mono";
+}
+
+.table .hid {
+    opacity: 0.2;
+}
+
+.table td.inputcontainer {
+    padding: 0;
+}
+
+.bareinput {
+    border: 0;
+    border-radius: 0;
+    color: transparent;
+    text-shadow: 0 0 0 #363636;
+}
