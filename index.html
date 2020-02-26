@@ -34,7 +34,7 @@
                         <div v-for="c in word" class="letter">
                             <span>{{ c }}</span>
                             <span v-if="decodeLetter(c) == ''" class="empty">-</span>
-                            <span v-else>{{ decodeLetter(c) }}</span>
+                            <span v-else :class="{ 'dupe': isDupe(decodeLetter(c)) }">{{ decodeLetter(c) }}</span>
                         </div>
                         <span> </span>
                     </div>
@@ -43,7 +43,8 @@
                 <table class="table is-bordered">
                     <thead>
                         <tr>
-                            <th v-for="letter in alphabet" :class="{ 'hid': !ciphertext.includes(letter) }">
+                            <th v-for="letter in alphabet"
+                                :class="{ 'hid': !ciphertext.includes(letter), 'used': decode.includes(letterToIdx(letter)), 'dupe': isDupe(letter) }">
                                 {{ letter }}</th>
                         </tr>
                     </thead>

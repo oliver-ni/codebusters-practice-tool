@@ -70,7 +70,14 @@ const app = new Vue({
             e.preventDefault();
         },
         isDupe(x) {
-
+            let already = false;
+            for (let i = 0; i < this.decode.length; i++) {
+                if (alphabet[this.decode[i]] == x) {
+                    if (already) return true;
+                    already = true;
+                }
+            }
+            return false;
         },
         deleteDecode(e, letter) {
             this.$set(this.decode, letters[letter], -1);
