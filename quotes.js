@@ -1,4 +1,4 @@
-const ALL_QUOTES = [
+let ALL_QUOTES = [
     {
         "text": "Genius is one percent inspiration and ninety-nine percent perspiration.",
         "author": "Thomas Edison"
@@ -6571,4 +6571,6 @@ const ALL_QUOTES = [
         "text": "Sometimes the cards we are dealt are not always fair. However you must keep smiling and moving on.",
         "author": "Tom Jackson"
     }
-]
+];
+
+// ALL_QUOTES = ALL_QUOTES.filter(x => x.text.length >= 90 && x.text.length <= 130);

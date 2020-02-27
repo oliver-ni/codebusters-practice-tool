@@ -55,9 +55,21 @@ const app = new Vue({
                 }
             }).join("");
         },
+        decodedMessage() {
+            return Array.prototype.map.call(this.ciphertext, x => {
+                if (alphabet.includes(x) && x != " ") {
+                    return this.decodeLetter(x);
+                } else {
+                    return x;
+                }
+            }).join("");
+        },
         wordByWord() {
             return this.ciphertext.split(" ");
-        }
+        },
+        isSolved() {
+            return this.decodedMessage == this.plaintext;
+        },
     },
     methods: {
         letterToIdx(x) {

@@ -29,7 +29,7 @@
             <div class="container content">
                 <p>Decode the following message which is a quote by {{ author }}.</p>
 
-                <div class="problem">
+                <div :class="{ 'problem': true, 'solved': isSolved }">
                     <div class="word" v-for="word in wordByWord">
                         <div v-for="c in word" class="letter">
                             <span>{{ c }}</span>
