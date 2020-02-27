@@ -96,7 +96,11 @@ const app = new Vue({
             e.preventDefault();
         },
         randomMap() {
-            return shuffleArray([...Array(26).keys()])
+            let map;
+            do {
+                map = shuffleArray([...Array(26).keys()]);
+            } while (map.some((x, i) => x == i));
+            return map;
         },
         decodeLetter(x) {
             if (!alphabet.includes(x)) return x;
