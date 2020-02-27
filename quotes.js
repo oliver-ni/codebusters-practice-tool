@@ -6573,4 +6573,4 @@ let ALL_QUOTES = [
     }
 ];
 
-// ALL_QUOTES = ALL_QUOTES.filter(x => x.text.length >= 90 && x.text.length <= 130);
+ALL_QUOTES = ALL_QUOTES.filter(x => x.text.length >= 90 && x.text.length <= 130);
