@@ -27,4 +27,35 @@ const frequencyTable = {
   z: .0009
 };
 
+function isAlpha(char) {
+  const charcode = char.charCodeAt(0);
+  return 97 <= charcode && charcode <= 122;
+}
 
+function countLetterStats(text) {
+  const stats = {};
+  let count = 0;
+  for (const letter of text) {
+    const ll = letter.toLowerCase();
+    if (isAlpha(ll)) {
+    	stats[ll] = (stats[ll] ?? 0) + 1;
+      count++;
+    }
+  }
+  return { stats, count };
+}
+
+function expectedFreq(count, ch) {
+  return Math.max(frequencyTable[ch] * count, 1);
+}
+
+function chiSquare(text) {
+  const { stats, count } = countLetterStats(text);
+  const expected = ch => expectedFreq(count, ch);
+  return Object.entries(stats)
+  	.map(stat => {
+      const [ch, freq] = stat;
+      return (freq - expected(ch)) ** 2 / expected(ch);
+    })
+   	.reduce((x, y) => x + y);
+}
