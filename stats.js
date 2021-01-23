@@ -27,6 +27,17 @@ const frequencyTable = {
   z: .0009
 };
 
+const add = (x, y) => x + y;
+const allChis = ALL_QUOTES.map(({text}) => chiSquare(text));
+const meanChi = allChis.reduce(add) / allChis.length;
+const varChi = allChis.map(x => (x - meanChi) ** 2).reduce(add) / allChis.length;
+const stdChi = varChi ** 0.5;
+const Difficulty = {
+  EASY: 0,
+  MEDIUM: 1,
+  HARD: 2,
+};
+
 function isAlpha(char) {
   const charcode = char.charCodeAt(0);
   return 97 <= charcode && charcode <= 122;
@@ -53,9 +64,18 @@ function chiSquare(text) {
   const { stats, count } = countLetterStats(text);
   const expected = ch => expectedFreq(count, ch);
   return Object.entries(stats)
-  	.map(stat => {
+    .map(stat => {
       const [ch, freq] = stat;
       return (freq - expected(ch)) ** 2 / expected(ch);
     })
-   	.reduce((x, y) => x + y);
+    .reduce(add);
+}
+
+function classifyText(text) {
+  const chiScore = chiSquare(text);
+  if (chiScore < meanChi - stdChi * 0.80)
+    return Difficulty.EASY;
+  if (chiScore > meanChi + stdChi * 0.70)
+    return Difficulty.HARD;
+  return Difficulty.MEDIUM;
 }
