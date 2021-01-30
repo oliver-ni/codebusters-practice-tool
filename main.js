@@ -43,7 +43,8 @@ const app = new Vue({
         plaintext: "",
         author: "",
         encode: [...Array(26).keys()],
-        decode: Array(26).fill(-1)
+        decode: Array(26).fill(-1),
+        difficulty: getDefaultDifficulty()
     },
     computed: {
         ciphertext() {
@@ -108,11 +109,16 @@ const app = new Vue({
             else return "";
         },
         newProblem() {
-            const quote = choose(ALL_QUOTES);
+            const quote = choose(QUOTES[this.difficulty]);
             this.plaintext = quote.text.toUpperCase();
             this.author = quote.author;
             this.encode = this.randomMap();
             this.decode = Array(26).fill(-1);
+        },
+        changeDifficulty(difficulty) {
+          setDefaultDifficulty(difficulty);
+          this.difficulty = difficulty;
+          this.newProblem();
         },
         countLetter(str, letter) {
             var regExp = new RegExp(letter, "g");
