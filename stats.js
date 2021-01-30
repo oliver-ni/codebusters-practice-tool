@@ -1,30 +1,30 @@
 const frequencyTable = {
-  e: .1251,
-  t: .0925,
-  a: .0804,
-  o: .0760,
-  i: .0726,
-  n: .0709,
-  s: .0654,
-  r: .0612,
-  h: .0549,
-  l: .0414,
-  d: .0399,
-  c: .036,
-  u: .0271,
-  m: .0253,
-  f: .0230,
-  p: .0200,
-  g: .0196,
-  w: .0192,
-  y: .0173,
-  b: .0154,
-  v: .0099,
-  k: .0067,
-  x: .0019,
-  j: .0016,
-  q: .0011,
-  z: .0009
+  e: 0.1251,
+  t: 0.0925,
+  a: 0.0804,
+  o: 0.0760,
+  i: 0.0726,
+  n: 0.0709,
+  s: 0.0654,
+  r: 0.0612,
+  h: 0.0549,
+  l: 0.0414,
+  d: 0.0399,
+  c: 0.036,
+  u: 0.0271,
+  m: 0.0253,
+  f: 0.0230,
+  p: 0.0200,
+  g: 0.0196,
+  w: 0.0192,
+  y: 0.0173,
+  b: 0.0154,
+  v: 0.0099,
+  k: 0.0067,
+  x: 0.0019,
+  j: 0.0016,
+  q: 0.0011,
+  z: 0.0009
 };
 
 const add = (x, y) => x + y;
@@ -36,6 +36,11 @@ const Difficulty = {
   EASY: 0,
   MEDIUM: 1,
   HARD: 2,
+};
+const QUOTES = {
+  [Difficulty.EASY]: ALL_QUOTES.filter(({text}) => classifyText(text) == 0),
+  [Difficulty.MEDIUM]: ALL_QUOTES.filter(({text}) => classifyText(text) == 1),
+  [Difficulty.HARD]: ALL_QUOTES.filter(({text}) => classifyText(text) == 2),
 };
 
 function isAlpha(char) {
@@ -78,4 +83,12 @@ function classifyText(text) {
   if (chiScore > meanChi + stdChi * 0.70)
     return Difficulty.HARD;
   return Difficulty.MEDIUM;
+}
+
+function setDefaultDifficulty(difficulty) {
+  localStorage.setItem("difficulty", JSON.stringify(difficulty));
+}
+
+function getDefaultDifficulty() {
+  return JSON.parse(localStorage.getItem("difficulty") ?? "1");
 }

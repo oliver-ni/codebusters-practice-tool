@@ -66,7 +66,25 @@
                     </tbody>
                 </table>
 
-                <button class="button" @click="newProblem">New Problem</button>
+                <!--<button class="button" @click="newProblem">New Problem</button>-->
+                <button 
+                 title="New easy problem"
+                 class="button"
+                 @click="changeDifficulty(0)">
+                  Easy
+                </button>
+                <button
+                 title="New medium problem"
+                 class="button"
+                 @click="changeDifficulty(1)">
+                  Medium
+                </button>
+                <button
+                 title="New hard problem"
+                 class="button"
+                 @click="changeDifficulty(2)">
+                  Hard
+                </button>
             </div>
         </section>
 
