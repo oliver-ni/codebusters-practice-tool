@@ -40,13 +40,18 @@ const app = new Vue({
     el: '#main',
     data: {
         alphabet: alphabet,
-        plaintext: "",
+        original: "",
         author: "",
         encode: [...Array(26).keys()],
         decode: Array(26).fill(-1),
-        difficulty: getDefaultDifficulty()
+        difficulty: getDefaultDifficulty(),
+        patristocrat: false,
     },
     computed: {
+        plaintext() {
+            if (!this.patristocrat) return this.original;
+            return Array.from(this.original).filter(x => alphabet.includes(x)).reduce((acc, curr, idx) => idx % 5 === 0 ? acc + " " + curr : acc + curr);
+        },
         ciphertext() {
             return Array.prototype.map.call(this.plaintext, x => {
                 if (alphabet.includes(x) && x != " ") {
@@ -110,7 +115,7 @@ const app = new Vue({
         },
         newProblem() {
             const quote = choose(QUOTES[this.difficulty]);
-            this.plaintext = quote.text.toUpperCase();
+            this.original = quote.text.toUpperCase();
             this.author = quote.author;
             this.encode = this.randomMap();
             this.decode = Array(26).fill(-1);
@@ -119,6 +124,9 @@ const app = new Vue({
           setDefaultDifficulty(difficulty);
           this.difficulty = difficulty;
           this.newProblem();
+        },
+        togglePatristocrat() {
+            this.patristocrat = !this.patristocrat;
         },
         countLetter(str, letter) {
             var regExp = new RegExp(letter, "g");

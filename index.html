@@ -30,6 +30,8 @@
             <div class="container content">
                 <p>Decode the following message which is a quote by {{ author }}.</p>
 
+                <p v-if="patristocrat">Hint: The first word is {{ original.split(" ")[0]  }}.</p>
+
                 <div :class="{ 'problem': true, 'solved': isSolved }">
                     <div class="word" v-for="word in wordByWord">
                         <div v-for="c in word" class="letter">
@@ -85,6 +87,8 @@
                  @click="changeDifficulty(2)">
                   Hard
                 </button>
+                <div style="height: 0.3rem;"></div>
+                <button title="Patristocrat" class="button" @click="togglePatristocrat()">Toggle Patristocrat</button>
             </div>
         </section>
 
