@@ -1,3 +1,5 @@
+const { createApp } = Vue;
+
 const choose = arr => arr[Math.floor(Math.random() * arr.length)];
 
 const shuffleArray = arr => arr
@@ -36,16 +38,17 @@ const letters = {
 
 const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-const app = new Vue({
-    el: '#main',
-    data: {
-        alphabet: alphabet,
-        original: "",
-        author: "",
-        encode: [...Array(26).keys()],
-        decode: Array(26).fill(-1),
-        difficulty: getDefaultDifficulty(),
-        patristocrat: false,
+const app = createApp({
+    data() {
+        return {
+            alphabet: alphabet,
+            original: "",
+            author: "",
+            encode: [...Array(26).keys()],
+            decode: Array(26).fill(-1),
+            difficulty: getDefaultDifficulty(),
+            patristocrat: false,
+        }
     },
     computed: {
         plaintext() {
@@ -83,7 +86,7 @@ const app = new Vue({
         },
         updateDecode(e, letter) {
             if (alphabet.includes(e.key.toUpperCase())) {
-                this.$set(this.decode, letters[letter], letters[e.key.toUpperCase()]);
+                this.decode[letters[letter]] = letters[e.key.toUpperCase()];
             }
             e.preventDefault();
         },
@@ -98,7 +101,7 @@ const app = new Vue({
             return false;
         },
         deleteDecode(e, letter) {
-            this.$set(this.decode, letters[letter], -1);
+            this.decode[letters[letter]] = -1;
             e.preventDefault();
         },
         randomMap() {
@@ -121,9 +124,9 @@ const app = new Vue({
             this.decode = Array(26).fill(-1);
         },
         changeDifficulty(difficulty) {
-          setDefaultDifficulty(difficulty);
-          this.difficulty = difficulty;
-          this.newProblem();
+            setDefaultDifficulty(difficulty);
+            this.difficulty = difficulty;
+            this.newProblem();
         },
         togglePatristocrat() {
             this.patristocrat = !this.patristocrat;
@@ -139,4 +142,4 @@ const app = new Vue({
     created() {
         this.newProblem();
     }
-});
+}).mount("#main");

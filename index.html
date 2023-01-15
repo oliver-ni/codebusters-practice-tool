@@ -13,8 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script> -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 
     <script defer src="quotes.js"></script>
     <script defer src="stats.js"></script>
@@ -69,23 +68,14 @@
                 </table>
 
                 <!--<button class="button" @click="newProblem">New Problem</button>-->
-                <button 
-                 title="New easy problem"
-                 class="button"
-                 @click="changeDifficulty(0)">
-                  Easy
+                <button title="New easy problem" class="button" @click="changeDifficulty(0)">
+                    Easy
                 </button>
-                <button
-                 title="New medium problem"
-                 class="button"
-                 @click="changeDifficulty(1)">
-                  Medium
+                <button title="New medium problem" class="button" @click="changeDifficulty(1)">
+                    Medium
                 </button>
-                <button
-                 title="New hard problem"
-                 class="button"
-                 @click="changeDifficulty(2)">
-                  Hard
+                <button title="New hard problem" class="button" @click="changeDifficulty(2)">
+                    Hard
                 </button>
                 <div style="height: 0.3rem;"></div>
                 <button title="Patristocrat" class="button" @click="togglePatristocrat()">Toggle Patristocrat</button>
