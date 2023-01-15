@@ -32,13 +32,11 @@
                 <p v-if="patristocrat">Hint: The first word is {{ original.split(" ")[0]  }}.</p>
 
                 <div :class="{ 'problem': true, 'solved': isSolved }">
-                    <div class="word" v-for="word in wordByWord">
-                        <div v-for="c in word" class="letter">
-                            <span>{{ c }}</span>
-                            <span v-if="decodeLetter(c) == ''" class="empty">-</span>
-                            <span v-else :class="{ 'dupe': isDupe(decodeLetter(c)) }">{{ decodeLetter(c) }}</span>
-                        </div>
-                        <span> </span>
+                    <div v-for="(c, i) in ciphertext" class="letter">
+                        <span>{{ c }}</span>
+                        <input v-show="decodable(c)" class="letter-input" :class="{ 'dupe': isDupe(decodeLetter(c)) }"
+                            placeholder="-" :value="decodeLetter(c)" ref="inputs" @keydown="keyDown($event, c, i)"
+                            @beforeinput="beforeInput($event, c, i)">
                     </div>
                 </div>
 
@@ -59,8 +57,8 @@
                         <tr>
                             <td v-for="letter in alphabet" class="inputcontainer"
                                 :class="{ 'hid': !ciphertext.includes(letter) }">
-                                <input class="bareinput input" @keydown.delete="deleteDecode($event, letter)"
-                                    @keypress="updateDecode($event, letter)" :value="decodeLetter(letter)"
+                                <input class="bareinput input" @keydown="keyDown($event, letter)"
+                                    @beforeinput="beforeInput($event, letter)" :value="decodeLetter(letter)"
                                     :disabled="!ciphertext.includes(letter)">
                             </td>
                         </tr>

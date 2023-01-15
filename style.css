@@ -1,7 +1,4 @@
 .problem {
-    font-family: "Roboto Mono";
-    font-weight: bold;
-    font-size: larger;
     margin-bottom: 15px;
 }
 
@@ -19,13 +16,34 @@
     display: inline-flex;
     flex-direction: column;
     white-space: pre;
+
+    font-family: "Roboto Mono";
+    font-weight: bold;
+    font-size: larger;
 }
 
-.problem .letter .empty {
+.problem .letter .letter-input {
+    border: none;
+    padding: 0;
+    width: 1ch;
+
+    font-family: "Roboto Mono";
+    font-weight: inherit;
+    font-size: inherit;
+    color: inherit;
+}
+
+.problem .letter .letter-input::placeholder {
     color: #CCCCCC;
 }
 
-.problem .letter .dupe {
+.problem .letter .letter-input:focus {
+    outline: none;
+    caret-color: transparent;
+    background-color: #F9E79F;
+}
+
+.problem .letter .letter-input.dupe {
     color: #E74C3C;
 }
 
@@ -53,6 +71,5 @@
 .bareinput {
     border: 0;
     border-radius: 0;
-    color: transparent;
-    text-shadow: 0 0 0 #363636;
+    caret-color: transparent;
 }

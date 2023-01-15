@@ -73,9 +73,6 @@ const app = createApp({
                 }
             }).join("");
         },
-        wordByWord() {
-            return this.ciphertext.split(" ");
-        },
         isSolved() {
             return this.decodedMessage == this.plaintext;
         },
@@ -84,11 +81,39 @@ const app = createApp({
         letterToIdx(x) {
             return letters[x];
         },
-        updateDecode(e, letter) {
-            if (alphabet.includes(e.key.toUpperCase())) {
-                this.decode[letters[letter]] = letters[e.key.toUpperCase()];
+        keyDown(e, letter, textIndex) {
+            if (e.code == "ArrowLeft" && textIndex) {
+                this.focusPrev(textIndex);
+                e.preventDefault();
             }
+            if (e.code == "ArrowRight" && textIndex) {
+                this.focusNext(textIndex);
+                e.preventDefault();
+            }
+            if (e.code == "Backspace") {
+                this.decode[letters[letter]] = -1;
+                e.preventDefault();
+            }
+        },
+        beforeInput(e, letter, textIndex) {
             e.preventDefault();
+            if (!e.data) return;
+            const key = e.data[0].toUpperCase();
+            if (!alphabet.includes(key)) return;
+            this.decode[letters[letter]] = letters[key];
+            if (textIndex) this.focusNext(textIndex);
+        },
+        focusPrev(textIndex) {
+            do {
+                textIndex--;
+            } while (!this.decodable(this.ciphertext[textIndex]))
+            this.$refs.inputs[textIndex].focus();
+        },
+        focusNext(textIndex) {
+            do {
+                textIndex++;
+            } while (!this.decodable(this.ciphertext[textIndex]))
+            this.$refs.inputs[textIndex].focus();
         },
         isDupe(x) {
             let already = false;
@@ -100,16 +125,15 @@ const app = createApp({
             }
             return false;
         },
-        deleteDecode(e, letter) {
-            this.decode[letters[letter]] = -1;
-            e.preventDefault();
-        },
         randomMap() {
             let map;
             do {
                 map = shuffleArray([...Array(26).keys()]);
             } while (map.some((x, i) => x == i));
             return map;
+        },
+        decodable(x) {
+            return alphabet.includes(x);
         },
         decodeLetter(x) {
             if (!alphabet.includes(x)) return x;
